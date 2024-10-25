@@ -10,7 +10,7 @@ import TotalOrderLineChartCard from './TotalOrderLineChartCard';
 import TotalIncomeDarkCard from './TotalIncomeDarkCard';
 import TotalIncomeLightCard from './TotalIncomeLightCard';
 import TotalGrowthBarChart from './TotalGrowthBarChart';
-
+import Chatbot from './chatbot';
 import { gridSpacing } from 'store/constant';
 
 // assets
@@ -64,6 +64,7 @@ const Dashboard = () => {
           </Grid>
         </Grid>
       </Grid>
+      <Chatbot/>
     </Grid>
   );
 };
