@@ -17,6 +17,22 @@ const other = {
       url: '/sample-page',
       icon: icons.IconBrandChrome,
       breadcrumbs: false
+    },
+    {
+      id: 'sales-page',
+      title: 'Sales',
+      type: 'item',
+      url: '/sales-page',
+      icon: icons.IconBrandChrome,
+      breadcrumbs: false
+    },
+    {
+      id: 'purchase-page',
+      title: 'Purchase',
+      type: 'item',
+      url: '/sales-page',
+      icon: icons.IconBrandChrome,
+      breadcrumbs: false
     }
     // {
     //   id: 'documentation',
