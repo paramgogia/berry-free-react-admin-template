@@ -8,6 +8,7 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
+import Tooltip from '@mui/material/Tooltip';
 
 // third-party
 import Chart from 'react-apexcharts';
@@ -116,11 +117,13 @@ const MostSoldItemCard = ({ isLoading }) => {
                   <Grid item xs={6}>
                     <Grid container alignItems="center">
                       <Grid item>
-                        {timeValue ? (
-                          <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>Item A - 320 Sold</Typography>
-                        ) : (
-                          <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>Item B - 1,200 Sold</Typography>
-                        )}
+                        <Tooltip title={timeValue ? "Count for Item A" : "Count for Item B"} arrow>
+                          <Typography 
+                            sx={{ fontSize: '2.25rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }} 
+                          >
+                            {timeValue ? "Item A" : "Item B"}
+                          </Typography>
+                        </Tooltip>
                       </Grid>
                       <Grid item>
                         <Avatar
