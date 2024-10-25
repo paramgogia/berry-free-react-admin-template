@@ -20,12 +20,10 @@ import ChartDataMonth from './chart-data/total-order-month-line-chart';
 import ChartDataYear from './chart-data/total-order-year-line-chart';
 
 // assets
-import LocalMallOutlinedIcon from '@mui/icons-material/LocalMallOutlined';
-import ArrowDownwardIcon from '@mui/icons-material/ArrowDownward';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import ArrowUpwardIcon from '@mui/icons-material/ArrowUpward';
 
-// ==============================|| DASHBOARD - TOTAL ORDER LINE CHART CARD ||============================== //
-
-const TotalOrderLineChartCard = ({ isLoading }) => {
+const MostSoldItemCard = ({ isLoading }) => {
   const theme = useTheme();
 
   const [timeValue, setTimeValue] = React.useState(false);
@@ -42,7 +40,7 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
           border={false}
           content={false}
           sx={{
-            bgcolor: 'primary.dark',
+            bgcolor: 'secondary.dark',
             color: '#fff',
             overflow: 'hidden',
             position: 'relative',
@@ -55,7 +53,7 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
               position: 'absolute',
               width: 210,
               height: 210,
-              background: theme.palette.primary[800],
+              background: theme.palette.secondary[800],
               borderRadius: '50%',
               top: { xs: -105, sm: -85 },
               right: { xs: -140, sm: -95 }
@@ -65,7 +63,7 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
               position: 'absolute',
               width: 210,
               height: 210,
-              background: theme.palette.primary[800],
+              background: theme.palette.secondary[800],
               borderRadius: '50%',
               top: { xs: -155, sm: -125 },
               right: { xs: -70, sm: -15 },
@@ -83,12 +81,12 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                       sx={{
                         ...theme.typography.commonAvatar,
                         ...theme.typography.largeAvatar,
-                        bgcolor: 'primary.800',
+                        bgcolor: 'secondary.800',
                         color: '#fff',
                         mt: 1
                       }}
                     >
-                      <LocalMallOutlinedIcon fontSize="inherit" />
+                      <ShoppingCartOutlinedIcon fontSize="inherit" />
                     </Avatar>
                   </Grid>
                   <Grid item>
@@ -119,9 +117,9 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                     <Grid container alignItems="center">
                       <Grid item>
                         {timeValue ? (
-                          <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>$108</Typography>
+                          <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>Item A - 320 Sold</Typography>
                         ) : (
-                          <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>$961</Typography>
+                          <Typography sx={{ fontSize: '2.125rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }}>Item B - 1,200 Sold</Typography>
                         )}
                       </Grid>
                       <Grid item>
@@ -129,11 +127,11 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                           sx={{
                             ...theme.typography.smallAvatar,
                             cursor: 'pointer',
-                            bgcolor: 'primary.200',
-                            color: 'primary.dark'
+                            bgcolor: 'secondary.200',
+                            color: 'secondary.dark'
                           }}
                         >
-                          <ArrowDownwardIcon fontSize="inherit" sx={{ transform: 'rotate3d(1, 1, 1, 45deg)' }} />
+                          <ArrowUpwardIcon fontSize="inherit" sx={{ transform: 'rotate3d(1, 1, 1, 45deg)' }} />
                         </Avatar>
                       </Grid>
                       <Grid item xs={12}>
@@ -141,10 +139,10 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
                           sx={{
                             fontSize: '1rem',
                             fontWeight: 500,
-                            color: 'primary.200'
+                            color: 'secondary.200'
                           }}
                         >
-                          Total Order
+                          Most Sold Item
                         </Typography>
                       </Grid>
                     </Grid>
@@ -162,8 +160,8 @@ const TotalOrderLineChartCard = ({ isLoading }) => {
   );
 };
 
-TotalOrderLineChartCard.propTypes = {
+MostSoldItemCard.propTypes = {
   isLoading: PropTypes.bool
 };
 
-export default TotalOrderLineChartCard;
+export default MostSoldItemCard;

@@ -1,6 +1,15 @@
-// ==============================|| DASHBOARD - TOTAL GROWTH BAR CHART ||============================== //
+// ==============================|| DASHBOARD - SALES PER MONTH BAR CHART ||============================== //
 
-const chartData = {
+// Dummy data for each category
+const dummyCategorySalesData = {
+  electronics: [{ name: 'Sales', data: [150, 200, 180, 250, 220, 300, 280, 270, 300, 320, 310, 290] }],
+  fashion: [{ name: 'Sales', data: [80, 90, 75, 100, 120, 150, 170, 160, 140, 130, 110, 100] }],
+  'home-appliances': [{ name: 'Sales', data: [60, 70, 65, 80, 95, 110, 130, 125, 105, 100, 90, 85] }],
+  books: [{ name: 'Sales', data: [200, 210, 180, 220, 230, 250, 240, 230, 220, 210, 205, 195] }]
+};
+
+// Function to get chart data for the selected category
+const getChartDataForCategory = (category, dataSource = dummyCategorySalesData) => ({
   height: 480,
   type: 'bar',
   options: {
@@ -62,25 +71,12 @@ const chartData = {
     },
     grid: {
       show: true
+    },
+    title: {
+      text: `Monthly Sales for ${category.charAt(0).toUpperCase() + category.slice(1)}`
     }
   },
-  series: [
-    {
-      name: 'Investment',
-      data: [35, 125, 35, 35, 35, 80, 35, 20, 35, 45, 15, 75]
-    },
-    {
-      name: 'Loss',
-      data: [35, 15, 15, 35, 65, 40, 80, 25, 15, 85, 25, 75]
-    },
-    {
-      name: 'Profit',
-      data: [35, 145, 35, 35, 20, 105, 100, 10, 65, 45, 30, 10]
-    },
-    {
-      name: 'Maintenance',
-      data: [0, 0, 75, 0, 0, 115, 0, 0, 0, 0, 150, 0]
-    }
-  ]
-};
-export default chartData;
+  series: dataSource[category] || []
+});
+
+export default getChartDataForCategory;

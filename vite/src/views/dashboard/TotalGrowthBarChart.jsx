@@ -1,83 +1,33 @@
-import PropTypes from 'prop-types';
-import React from 'react';
-
-// material-ui
+import React, { useEffect, useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import Grid from '@mui/material/Grid';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import Typography from '@mui/material/Typography';
-
-// third-party
-import ApexCharts from 'apexcharts';
 import Chart from 'react-apexcharts';
-
-// project imports
 import SkeletonTotalGrowthBarChart from 'ui-component/cards/Skeleton/TotalGrowthBarChart';
 import MainCard from 'ui-component/cards/MainCard';
 import { gridSpacing } from 'store/constant';
+import getChartDataForCategory from './chart-data/total-growth-bar-chart';
 
-// chart data
-import chartData from './chart-data/total-growth-bar-chart';
-
-const status = [
-  {
-    value: 'today',
-    label: 'Today'
-  },
-  {
-    value: 'month',
-    label: 'This Month'
-  },
-  {
-    value: 'year',
-    label: 'This Year'
-  }
-];
-
-// ==============================|| DASHBOARD DEFAULT - TOTAL GROWTH BAR CHART ||============================== //
-
-const TotalGrowthBarChart = ({ isLoading }) => {
-  const [value, setValue] = React.useState('today');
+const SalesPerMonthChart = ({ isLoading }) => {
+  const [category, setCategory] = useState('electronics'); // Default category
+  const [chartData, setChartData] = useState(getChartDataForCategory(category));
   const theme = useTheme();
+  const useBackend = false; // Set to true to use backend data in the future
 
-  const { primary } = theme.palette.text;
-  const divider = theme.palette.divider;
-  const grey500 = theme.palette.grey[500];
-
-  const primary200 = theme.palette.primary[200];
-  const primaryDark = theme.palette.primary.dark;
-  const secondaryMain = theme.palette.secondary.main;
-  const secondaryLight = theme.palette.secondary.light;
-
-  React.useEffect(() => {
-    const newChartData = {
-      ...chartData.options,
-      colors: [primary200, primaryDark, secondaryMain, secondaryLight],
-      xaxis: {
-        labels: {
-          style: {
-            colors: [primary, primary, primary, primary, primary, primary, primary, primary, primary, primary, primary, primary]
-          }
-        }
-      },
-      yaxis: {
-        labels: {
-          style: {
-            colors: [primary]
-          }
-        }
-      },
-      grid: { borderColor: divider },
-      tooltip: { theme: 'light' },
-      legend: { labels: { colors: grey500 } }
-    };
-
-    // do not load chart when loading
-    if (!isLoading) {
-      ApexCharts.exec(`bar-chart`, 'updateOptions', newChartData);
+  useEffect(() => {
+    if (useBackend) {
+      // Placeholder for backend API call
+      // e.g., fetch(`your-backend-api/sales?category=${category}`)
+      //   .then(response => response.json())
+      //   .then(data => {
+      //      setChartData(getChartDataForCategory(category, data));
+      //   });
+    } else {
+      setChartData(getChartDataForCategory(category)); // Use dummy data
     }
-  }, [primary200, primaryDark, secondaryMain, secondaryLight, primary, divider, isLoading, grey500]);
+  }, [category, isLoading, useBackend]);
 
   return (
     <>
@@ -89,18 +39,22 @@ const TotalGrowthBarChart = ({ isLoading }) => {
             <Grid item xs={12}>
               <Grid container alignItems="center" justifyContent="space-between">
                 <Grid item>
-                  <Grid container direction="column" spacing={1}>
-                    <Grid item>
-                      <Typography variant="subtitle2">Total Growth</Typography>
-                    </Grid>
-                    <Grid item>
-                      <Typography variant="h3">$2,324.00</Typography>
-                    </Grid>
-                  </Grid>
+                  <Typography variant="subtitle2">Sales per Month</Typography>
+                  <Typography variant="h3">Category: {category}</Typography>
                 </Grid>
                 <Grid item>
-                  <TextField id="standard-select-currency" select value={value} onChange={(e) => setValue(e.target.value)}>
-                    {status.map((option) => (
+                  <TextField
+                    select
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    label="Select Category"
+                  >
+                    {[
+                      { value: 'electronics', label: 'Electronics' },
+                      { value: 'fashion', label: 'Fashion' },
+                      { value: 'home-appliances', label: 'Home Appliances' },
+                      { value: 'books', label: 'Books' }
+                    ].map((option) => (
                       <MenuItem key={option.value} value={option.value}>
                         {option.label}
                       </MenuItem>
@@ -109,15 +63,7 @@ const TotalGrowthBarChart = ({ isLoading }) => {
                 </Grid>
               </Grid>
             </Grid>
-            <Grid
-              item
-              xs={12}
-              sx={{
-                '& .apexcharts-menu.apexcharts-menu-open': {
-                  bgcolor: 'background.paper'
-                }
-              }}
-            >
+            <Grid item xs={12}>
               <Chart {...chartData} />
             </Grid>
           </Grid>
@@ -127,8 +73,4 @@ const TotalGrowthBarChart = ({ isLoading }) => {
   );
 };
 
-TotalGrowthBarChart.propTypes = {
-  isLoading: PropTypes.bool
-};
-
-export default TotalGrowthBarChart;
+export default SalesPerMonthChart;
