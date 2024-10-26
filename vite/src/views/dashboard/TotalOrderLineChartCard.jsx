@@ -121,7 +121,7 @@ const MostSoldItemCard = ({ isLoading }) => {
                           <Typography 
                             sx={{ fontSize: '2.25rem', fontWeight: 500, mr: 1, mt: 1.75, mb: 0.75 }} 
                           >
-                            {timeValue ? "Item A" : "Item B"}
+                            Laptop
                           </Typography>
                         </Tooltip>
                       </Grid>

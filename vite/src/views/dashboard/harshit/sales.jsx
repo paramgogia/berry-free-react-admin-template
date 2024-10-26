@@ -1,70 +1,256 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEdit, faTrashAlt, faSave, faSort } from '@fortawesome/free-solid-svg-icons';
+import { faSort, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { CSVLink } from 'react-csv';
 
-const initialProducts = [
-  { name: 'Macbook pro', sku: 'PT001', category: 'Computers', price: 1500, unit: 'pc', qty: 100, createdBy: 'Admin' },
-  { name: 'Orange', sku: 'PT002', category: 'Fruits', price: 10, unit: 'pc', qty: 100, createdBy: 'Admin' },
-  // Add more products here...
+const initialData = [
+  {
+    Unnamed: 0,
+    transaction_id: '02-03-2022 09:51',
+    timestamp: '02-03-2022 09:51',
+    product_id: 'Fruits & Vegetables',
+    category: 'gold',
+    customer_type: 3.99,
+    unit_price: 2,
+    quantity: 7.98,
+    total: 'e-wallet',
+  },
+  {
+    Unnamed: 1,
+    transaction_id: '02-03-2022 10:15',
+    timestamp: '02-03-2022 10:15',
+    product_id: 'Dairy',
+    category: 'silver',
+    customer_type: 5.99,
+    unit_price: 1,
+    quantity: 5.99,
+    total: 'credit card',
+  },
+  {
+    Unnamed: 2,
+    transaction_id: '02-03-2022 11:20',
+    timestamp: '02-03-2022 11:20',
+    product_id: 'Bakery',
+    category: 'bronze',
+    customer_type: 2.99,
+    unit_price: 3,
+    quantity: 8.97,
+    total: 'cash',
+  },
+  {
+    Unnamed: 3,
+    transaction_id: '02-03-2022 12:30',
+    timestamp: '02-03-2022 12:30',
+    product_id: 'Meat',
+    category: 'gold',
+    customer_type: 7.99,
+    unit_price: 4,
+    quantity: 31.96,
+    total: 'e-wallet',
+  },
+  {
+    Unnamed: 4,
+    transaction_id: '02-03-2022 13:45',
+    timestamp: '02-03-2022 13:45',
+    product_id: 'Seafood',
+    category: 'silver',
+    customer_type: 9.99,
+    unit_price: 2,
+    quantity: 19.98,
+    total: 'credit card',
+  },
+  {
+    Unnamed: 5,
+    transaction_id: '02-03-2022 14:50',
+    timestamp: '02-03-2022 14:50',
+    product_id: 'Beverages',
+    category: 'bronze',
+    customer_type: 1.99,
+    unit_price: 5,
+    quantity: 9.95,
+    total: 'cash',
+  },
+  {
+    Unnamed: 6,
+    transaction_id: '02-03-2022 15:10',
+    timestamp: '02-03-2022 15:10',
+    product_id: 'Snacks',
+    category: 'gold',
+    customer_type: 3.49,
+    unit_price: 3,
+    quantity: 10.47,
+    total: 'e-wallet',
+  },
+  {
+    Unnamed: 7,
+    transaction_id: '02-03-2022 16:25',
+    timestamp: '02-03-2022 16:25',
+    product_id: 'Frozen Foods',
+    category: 'silver',
+    customer_type: 4.99,
+    unit_price: 2,
+    quantity: 9.98,
+    total: 'credit card',
+  },
+  {
+    Unnamed: 8,
+    transaction_id: '02-03-2022 17:35',
+    timestamp: '02-03-2022 17:35',
+    product_id: 'Canned Goods',
+    category: 'bronze',
+    customer_type: 2.49,
+    unit_price: 4,
+    quantity: 9.96,
+    total: 'cash',
+  },
+  {
+    Unnamed: 9,
+    transaction_id: '02-03-2022 18:45',
+    timestamp: '02-03-2022 18:45',
+    product_id: 'Dry Goods',
+    category: 'gold',
+    customer_type: 6.99,
+    unit_price: 3,
+    quantity: 20.97,
+    total: 'e-wallet',
+  },
+  {
+    Unnamed: 10,
+    transaction_id: '02-03-2022 19:55',
+    timestamp: '02-03-2022 19:55',
+    product_id: 'Condiments',
+    category: 'silver',
+    customer_type: 3.99,
+    unit_price: 2,
+    quantity: 7.98,
+    total: 'credit card',
+  },
+  {
+    Unnamed: 11,
+    transaction_id: '02-03-2022 20:05',
+    timestamp: '02-03-2022 20:05',
+    product_id: 'Spices',
+    category: 'bronze',
+    customer_type: 1.49,
+    unit_price: 5,
+    quantity: 7.45,
+    total: 'cash',
+  },
+  {
+    Unnamed: 12,
+    transaction_id: '02-03-2022 21:15',
+    timestamp: '02-03-2022 21:15',
+    product_id: 'Grains',
+    category: 'gold',
+    customer_type: 4.49,
+    unit_price: 3,
+    quantity: 13.47,
+    total: 'e-wallet',
+  },
+  {
+    Unnamed: 13,
+    transaction_id: '02-03-2022 22:25',
+    timestamp: '02-03-2022 22:25',
+    product_id: 'Pasta',
+    category: 'silver',
+    customer_type: 2.99,
+    unit_price: 2,
+    quantity: 5.98,
+    total: 'credit card',
+  },
+  {
+    Unnamed: 14,
+    transaction_id: '02-03-2022 23:35',
+    timestamp: '02-03-2022 23:35',
+    product_id: 'Sauces',
+    category: 'bronze',
+    customer_type: 3.99,
+    unit_price: 4,
+    quantity: 15.96,
+    total: 'cash',
+  },
+  {
+    Unnamed: 15,
+    transaction_id: '02-03-2022 23:55',
+    timestamp: '02-03-2022 23:55',
+    product_id: 'Oils',
+    category: 'gold',
+    customer_type: 5.49,
+    unit_price: 3,
+    quantity: 16.47,
+    total: 'e-wallet',
+  },
+  {
+    Unnamed: 16,
+    transaction_id: '03-03-2022 00:15',
+    timestamp: '03-03-2022 00:15',
+    product_id: 'Vinegars',
+    category: 'silver',
+    customer_type: 2.49,
+    unit_price: 2,
+    quantity: 4.98,
+    total: 'credit card',
+  },
+  {
+    Unnamed: 17,
+    transaction_id: '03-03-2022 01:25',
+    timestamp: '03-03-2022 01:25',
+    product_id: 'Baking Supplies',
+    category: 'bronze',
+    customer_type: 1.99,
+    unit_price: 5,
+    quantity: 9.95,
+    total: 'cash',
+  },
+  {
+    Unnamed: 18,
+    transaction_id: '03-03-2022 02:35',
+    timestamp: '03-03-2022 02:35',
+    product_id: 'Breakfast Foods',
+    category: 'gold',
+    customer_type: 4.99,
+    unit_price: 3,
+    quantity: 14.97,
+    total: 'e-wallet',
+  },
+  {
+    Unnamed: 19,
+    transaction_id: '03-03-2022 03:45',
+    timestamp: '03-03-2022 03:45',
+    product_id: 'Baby Foods',
+    category: 'silver',
+    customer_type: 3.49,
+    unit_price: 2,
+    quantity: 6.98,
+    total: 'credit card',
+  },
+  {
+    Unnamed: 20,
+    transaction_id: '03-03-2022 04:55',
+    timestamp: '03-03-2022 04:55',
+    product_id: 'Pet Foods',
+    category: 'bronze',
+    customer_type: 2.99,
+    unit_price: 4,
+    quantity: 11.96,
+    total: 'cash',
+  }
+  // (add more entries as per your dataset)
 ];
 
 const Sales = () => {
-  const [products, setProducts] = useState(initialProducts);
-  const [newProduct, setNewProduct] = useState({
-    name: '', sku: '', category: '', price: '', unit: '', qty: '', createdBy: 'Admin',
-  });
-  const [editIndex, setEditIndex] = useState(null);
-  const [editQty, setEditQty] = useState('');
-  const [showForm, setShowForm] = useState(false); // State to control form visibility
-  const [searchTerm, setSearchTerm] = useState(''); // State to handle search
-  const [sortConfig, setSortConfig] = useState({ key: '', direction: '' }); // State for sorting
+  const [products, setProducts] = useState(initialData);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
-  // Handle change in input for adding new product
-  const handleInputChange = (e) => {
-    setNewProduct({
-      ...newProduct,
-      [e.target.name]: e.target.value,
-    });
-  };
+  const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
 
-  // Add new product
-  const handleAddProduct = () => {
-    if (newProduct.name && newProduct.sku && newProduct.category && newProduct.price && newProduct.qty) {
-      setProducts([...products, { ...newProduct, price: parseFloat(newProduct.price), qty: parseInt(newProduct.qty) }]);
-      setNewProduct({
-        name: '', sku: '', category: '', price: '', unit: '', qty: '', createdBy: 'Admin',
-      });
-      setShowForm(false); // Hide form after adding the product
-    } else {
-      alert("Please fill in all fields.");
-    }
-  };
+  // Pagination control
+  const indexOfLastProduct = currentPage * itemsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - itemsPerPage;
+  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
 
-  // Edit product quantity
-  const handleEditQty = (index) => {
-    setEditIndex(index);
-    setEditQty(products[index].qty);
-  };
-
-  const handleSaveQty = (index) => {
-    const updatedProducts = [...products];
-    updatedProducts[index].qty = parseInt(editQty);
-    setProducts(updatedProducts);
-    setEditIndex(null); // Reset the edit state
-  };
-
-  // Delete product
-  const handleDeleteProduct = (index) => {
-    const updatedProducts = products.filter((_, i) => i !== index);
-    setProducts(updatedProducts);
-  };
-
-  // Handle search term
-  const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
-  // Sorting function
+  // Handle sorting
   const handleSort = (key) => {
     let direction = 'ascending';
     if (sortConfig.key === key && sortConfig.direction === 'ascending') {
@@ -73,167 +259,75 @@ const Sales = () => {
     setSortConfig({ key, direction });
   };
 
-  // Sorting logic
-  const sortedProducts = [...products].sort((a, b) => {
+  const sortedProducts = [...currentProducts].sort((a, b) => {
     if (sortConfig.key) {
       const aValue = a[sortConfig.key];
       const bValue = b[sortConfig.key];
-
       if (typeof aValue === 'string' && typeof bValue === 'string') {
         return sortConfig.direction === 'ascending'
           ? aValue.localeCompare(bValue)
           : bValue.localeCompare(aValue);
       }
-
       return sortConfig.direction === 'ascending' ? aValue - bValue : bValue - aValue;
     }
     return 0;
   });
 
-  // Filtered and sorted products
-  const filteredProducts = sortedProducts.filter((product) =>
-    product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    product.sku.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    product.category.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // CSV headers and data
+  const headers = [
+    { label: 'Unnamed', key: 'Unnamed' },
+    { label: 'Transaction ID', key: 'transaction_id' },
+    { label: 'Timestamp', key: 'timestamp' },
+    { label: 'Product ID', key: 'product_id' },
+    { label: 'Category', key: 'category' },
+    { label: 'Customer Type', key: 'customer_type' },
+    { label: 'Unit Price', key: 'unit_price' },
+    { label: 'Quantity', key: 'quantity' },
+    { label: 'Total', key: 'total' },
+  ];
 
   return (
     <div className="container mx-auto mt-10 p-4">
-      <div className="flex justify-between mb-4">
-        <h3 className="text-xl font-semibold">Product List</h3>
-        <input
-          type="text"
-          placeholder="Search by name, SKU, or category..."
-          value={searchTerm}
-          onChange={handleSearch}
-          className="border p-2 mr-2"
-        />
-        <button
-          className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600"
-          onClick={() => setShowForm(!showForm)} // Toggle form visibility
-        >
-          {showForm ? 'Cancel' : '+ Add New Product'}
-        </button>
-      </div>
-
-      {showForm && (
-        <div className="mb-6">
-          {/* Form inputs */}
-          <input
-            type="text"
-            name="name"
-            placeholder="Product Name"
-            value={newProduct.name}
-            onChange={handleInputChange}
-            className="border p-2 mr-2"
-          />
-          <input
-            type="text"
-            name="sku"
-            placeholder="SKU"
-            value={newProduct.sku}
-            onChange={handleInputChange}
-            className="border p-2 mr-2"
-          />
-          <input
-            type="text"
-            name="category"
-            placeholder="Category"
-            value={newProduct.category}
-            onChange={handleInputChange}
-            className="border p-2 mr-2"
-          />
-          <input
-            type="number"
-            name="price"
-            placeholder="Price"
-            value={newProduct.price}
-            onChange={handleInputChange}
-            className="border p-2 mr-2"
-          />
-          <input
-            type="text"
-            name="unit"
-            placeholder="Unit"
-            value={newProduct.unit}
-            onChange={handleInputChange}
-            className="border p-2 mr-2"
-          />
-          <input
-            type="number"
-            name="qty"
-            placeholder="Quantity"
-            value={newProduct.qty}
-            onChange={handleInputChange}
-            className="border p-2 mr-2"
-          />
-          <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" onClick={handleAddProduct}>
-            Add Product
-          </button>
-        </div>
-      )}
+      <h3 className="text-xl font-semibold mb-4">Sales Data</h3>
+      
+      <CSVLink
+        data={products}
+        headers={headers}
+        filename="sales_data.csv"
+        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-4 inline-block"
+      >
+        Download CSV
+      </CSVLink>
 
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-200 shadow-md rounded-lg">
           <thead>
             <tr className="bg-gray-100 text-left">
-              <th className="p-3 cursor-pointer" onClick={() => handleSort('name')}>
-                Product Name <FontAwesomeIcon icon={faSort} />
-              </th>
-              <th className="p-3 cursor-pointer" onClick={() => handleSort('sku')}>
-                SKU <FontAwesomeIcon icon={faSort} />
-              </th>
-              <th className="p-3 cursor-pointer" onClick={() => handleSort('category')}>
-                Category <FontAwesomeIcon icon={faSort} />
-              </th>
-              <th className="p-3 cursor-pointer" onClick={() => handleSort('price')}>
-                Price <FontAwesomeIcon icon={faSort} />
-              </th>
-              <th className="p-3">Unit</th>
-              <th className="p-3 cursor-pointer" onClick={() => handleSort('qty')}>
-                Qty <FontAwesomeIcon icon={faSort} />
-              </th>
-              <th className="p-3">Created By</th>
-              <th className="p-3">Action</th>
+              {headers.map((header) => (
+                <th
+                  key={header.key}
+                  className="p-3 cursor-pointer"
+                  onClick={() => handleSort(header.key)}
+                >
+                  {header.label} <FontAwesomeIcon icon={faSort} />
+                </th>
+              ))}
+              <th className="p-3">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {filteredProducts.map((product, index) => (
+            {sortedProducts.map((product, index) => (
               <tr key={index} className="border-t">
-                <td className="p-3">{product.name}</td>
-                <td className="p-3">{product.sku}</td>
+                <td className="p-3">{product.Unnamed}</td>
+                <td className="p-3">{product.transaction_id}</td>
+                <td className="p-3">{product.timestamp}</td>
+                <td className="p-3">{product.product_id}</td>
                 <td className="p-3">{product.category}</td>
-                <td className="p-3">{product.price.toFixed(2)}</td>
-                <td className="p-3">{product.unit}</td>
-                <td className="p-3">
-                  {editIndex === index ? (
-                    <input
-                      type="number"
-                      value={editQty}
-                      onChange={(e) => setEditQty(parseInt(e.target.value))}
-                      className="border p-1"
-                    />
-                  ) : (
-                    product.qty
-                  )}
-                </td>
-                <td className="p-3">{product.createdBy}</td>
+                <td className="p-3">{product.customer_type}</td>
+                <td className="p-3">{product.unit_price}</td>
+                <td className="p-3">{product.quantity}</td>
+                <td className="p-3">{product.total}</td>
                 <td className="p-3 flex space-x-2">
-                  {editIndex === index ? (
-                    <button
-                      onClick={() => handleSaveQty(index)}
-                      className="text-green-500 hover:text-green-700"
-                    >
-                      <FontAwesomeIcon icon={faSave} />
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => handleEditQty(index)}
-                      className="text-blue-500 hover:text-blue-700"
-                    >
-                      <FontAwesomeIcon icon={faEdit} />
-                    </button>
-                  )}
                   <button
                     onClick={() => handleDeleteProduct(index)}
                     className="text-red-500 hover:text-red-700"
@@ -245,6 +339,23 @@ const Sales = () => {
             ))}
           </tbody>
         </table>
+      </div>
+
+      <div className="flex justify-between mt-4">
+        <button
+          disabled={currentPage === 1}
+          onClick={() => setCurrentPage(currentPage - 1)}
+          className="bg-gray-300 px-4 py-2 rounded"
+        >
+          Previous
+        </button>
+        <button
+          disabled={currentPage === Math.ceil(products.length / itemsPerPage)}
+          onClick={() => setCurrentPage(currentPage + 1)}
+          className="bg-gray-300 px-4 py-2 rounded"
+        >
+          Next
+        </button>
       </div>
     </div>
   );

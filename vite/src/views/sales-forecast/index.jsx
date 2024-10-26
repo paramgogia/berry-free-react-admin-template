@@ -7,7 +7,7 @@ import SalesForecast from 'views/dashboard/harshit/sales-forecast';
 // ==============================|| SAMPLE PAGE ||============================== //
 
 const SamplePage = () => (
-  <MainCard title="Sample Card">
+  <MainCard title="Sales Forecast">
     <SalesForecast /> 
   </MainCard>
 );

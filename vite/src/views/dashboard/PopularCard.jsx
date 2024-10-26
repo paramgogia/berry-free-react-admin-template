@@ -21,11 +21,11 @@ const PopularCard = ({ isLoading }) => {
 
   // Dummy data for now
   const dummyData = [
-    { id: '1', productName: 'Product A', daysUntilOutage: 3, demandRate: 20 },
-    { id: '2', productName: 'Product B', daysUntilOutage: 7, demandRate: 15 },
-    { id: '3', productName: 'Product C', daysUntilOutage: 12, demandRate: 10 },
-    { id: '4', productName: 'Product D', daysUntilOutage: 18, demandRate: 8 },
-    { id: '5', productName: 'Product E', daysUntilOutage: 30, demandRate: 5 }
+    { id: '1', productName: 'Laptop', daysUntilOutage: 3, demandRate: 20 },
+    { id: '2', productName: 'Smartphone', daysUntilOutage: 7, demandRate: 15 },
+    { id: '3', productName: 'Tablet', daysUntilOutage: 12, demandRate: 10 },
+    { id: '4', productName: 'Headphones', daysUntilOutage: 18, demandRate: 8 },
+    { id: '5', productName: 'Smartwatch', daysUntilOutage: 30, demandRate: 5 }
   ];
 
   // Fetch data using Axios (for future backend connection)

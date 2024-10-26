@@ -7,7 +7,7 @@ import Purchase from 'views/dashboard/harshit/purchases';
 // ==============================|| SAMPLE PAGE ||============================== //
 
 const SamplePage = () => (
-  <MainCard title="Sample Card">
+  <MainCard title="Purchases">
     <Purchase />
   </MainCard>
 );

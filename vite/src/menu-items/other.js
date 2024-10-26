@@ -30,7 +30,7 @@ const other = {
       id: 'purchase-page',
       title: 'Purchase',
       type: 'item',
-      url: '/sales-page',
+      url: '/purchase-page',
       icon: icons.IconBrandChrome,
       breadcrumbs: false
     },

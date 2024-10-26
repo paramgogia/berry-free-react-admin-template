@@ -7,7 +7,7 @@ import ProductTable from 'views/dashboard/harshit/ProductTable';
 // ==============================|| SAMPLE PAGE ||============================== //
 
 const SamplePage = () => (
-  <MainCard title="Sample Card">
+  <MainCard title="Products">
     <ProductTable />
   </MainCard>
 );

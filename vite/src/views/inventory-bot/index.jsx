@@ -7,7 +7,7 @@ import IB from 'views/dashboard/harshit/ib';
 // ==============================|| SAMPLE PAGE ||============================== //
 
 const SamplePage = () => (
-  <MainCard title="Sample Card">
+  <MainCard title="Inventory Bot">
     <IB />  
   </MainCard>
 );
