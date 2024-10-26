@@ -94,8 +94,6 @@ const WhisperTranscription = () => {
           const response = await fetch('https://api.openai.com/v1/audio/transcriptions', {
             method: 'POST',
             headers: {
-              'Authorization': `Bearer ${here}`, // Use environment variable for API key
-              'Content-Type': 'multipart/form-data' // Set content type for multipart form
             },
             body: formData
           });
