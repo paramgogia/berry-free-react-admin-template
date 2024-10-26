@@ -18,7 +18,8 @@ const UtilsShadow = Loadable(lazy(() => import('views/utilities/Shadow')));
 const SamplePage = Loadable(lazy(() => import('views/sample-page')));
 const SalesPage = Loadable(lazy(() => import('views/sales-page')));
 const PurchasePage = Loadable(lazy(() => import('views/purchase-page')));
-
+const IB = Loadable(lazy(() => import('views/inventory-bot')));
+const SalesForecast = Loadable(lazy(() => import('views/sales-forecast')));
 // ==============================|| MAIN ROUTING ||============================== //
 
 const MainRoutes = {
@@ -93,6 +94,14 @@ const MainRoutes = {
     }, {
       path: 'purchase-page',
       element: <PurchasePage />
+    },
+    {
+      path: 'inventory-bot',
+      element: <IB />
+    },
+    {
+      path: 'sales-forecast',
+      element: <SalesForecast />
     }
   ]
 };

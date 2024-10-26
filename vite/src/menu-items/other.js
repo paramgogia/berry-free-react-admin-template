@@ -33,6 +33,22 @@ const other = {
       url: '/sales-page',
       icon: icons.IconBrandChrome,
       breadcrumbs: false
+    },
+    {
+      id: 'inventory-bot',
+      title: 'Inventory Bot',
+      type: 'item',
+      url: '/inventory-bot',
+      icon: icons.IconBrandChrome,
+      breadcrumbs: false
+    },
+    {
+      id: 'sales-forecast',
+      title: 'Sales Forecast',
+      type: 'item',
+      url: '/sales-forecast',
+      icon: icons.IconBrandChrome,
+      breadcrumbs: false
     }
     // {
     //   id: 'documentation',

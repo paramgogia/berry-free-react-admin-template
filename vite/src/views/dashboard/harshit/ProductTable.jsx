@@ -1,70 +1,56 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEye, faEdit, faTrashAlt, faSave, faSort } from '@fortawesome/free-solid-svg-icons';
+import { faSort, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { CSVLink } from 'react-csv'; 
 
+// Data from CSV file
 const initialProducts = [
-  { name: 'Macbook pro', sku: 'PT001', category: 'Computers', price: 1500, unit: 'pc', qty: 100, createdBy: 'Admin' },
-  { name: 'Orange', sku: 'PT002', category: 'Fruits', price: 10, unit: 'pc', qty: 100, createdBy: 'Admin' },
-  // Add more products here...
+  {
+    index: 1,
+    product: "Garlic Oil - Vegetarian Capsule 500 mg",
+    category: "Beauty & Hygiene",
+    sub_category: "Hair Care",
+    brand: "Sri Sri Ayurveda",
+    sale_price: 220.0,
+    market_price: 220.0,
+    type: "Hair Oil & Serum",
+    rating: 4.1,
+    description: "This Product contains Garlic Oil that is known...",
+    quantity: 27,
+  },
+  {
+    index: 2,
+    product: "Water Bottle - Orange",
+    category: "Kitchen, Garden & Pets",
+    sub_category: "Storage & Accessories",
+    brand: "Mastercook",
+    sale_price: 180.0,
+    market_price: 180.0,
+    type: "Water & Fridge Bottles",
+    rating: 2.3,
+    description: "Each product is microwave safe (without lid)...",
+    quantity: 15,
+  },
 ];
 
 const ProductTable = () => {
   const [products, setProducts] = useState(initialProducts);
   const [newProduct, setNewProduct] = useState({
-    name: '', sku: '', category: '', price: '', unit: '', qty: '', createdBy: 'Admin',
+    index: products.length + 1,
+    product: '',
+    category: '',
+    sub_category: '',
+    brand: '',
+    sale_price: '',
+    market_price: '',
+    type: '',
+    rating: '',
+    description: '',
+    quantity: '',
   });
-  const [editIndex, setEditIndex] = useState(null);
-  const [editQty, setEditQty] = useState('');
-  const [showForm, setShowForm] = useState(false); // State to control form visibility
-  const [searchTerm, setSearchTerm] = useState(''); // State to handle search
-  const [sortConfig, setSortConfig] = useState({ key: '', direction: '' }); // State for sorting
+  const [sortConfig, setSortConfig] = useState({ key: '', direction: '' });
 
-  // Handle change in input for adding new product
-  const handleInputChange = (e) => {
-    setNewProduct({
-      ...newProduct,
-      [e.target.name]: e.target.value,
-    });
-  };
-
-  // Add new product
-  const handleAddProduct = () => {
-    if (newProduct.name && newProduct.sku && newProduct.category && newProduct.price && newProduct.qty) {
-      setProducts([...products, { ...newProduct, price: parseFloat(newProduct.price), qty: parseInt(newProduct.qty) }]);
-      setNewProduct({
-        name: '', sku: '', category: '', price: '', unit: '', qty: '', createdBy: 'Admin',
-      });
-      setShowForm(false); // Hide form after adding the product
-    } else {
-      alert("Please fill in all fields.");
-    }
-  };
-
-  // Edit product quantity
-  const handleEditQty = (index) => {
-    setEditIndex(index);
-    setEditQty(products[index].qty);
-  };
-
-  const handleSaveQty = (index) => {
-    const updatedProducts = [...products];
-    updatedProducts[index].qty = parseInt(editQty);
-    setProducts(updatedProducts);
-    setEditIndex(null); // Reset the edit state
-  };
-
-  // Delete product
-  const handleDeleteProduct = (index) => {
-    const updatedProducts = products.filter((_, i) => i !== index);
-    setProducts(updatedProducts);
-  };
-
-  // Handle search term
-  const handleSearch = (e) => {
-    setSearchTerm(e.target.value);
-  };
-
-  // Sorting function
+  // Handle sorting
   const handleSort = (key) => {
     let direction = 'ascending';
     if (sortConfig.key === key && sortConfig.direction === 'ascending') {
@@ -84,156 +70,133 @@ const ProductTable = () => {
           ? aValue.localeCompare(bValue)
           : bValue.localeCompare(aValue);
       }
-
       return sortConfig.direction === 'ascending' ? aValue - bValue : bValue - aValue;
     }
     return 0;
   });
 
-  // Filtered and sorted products
-  const filteredProducts = sortedProducts.filter((product) =>
-    product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    product.sku.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    product.category.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // Handle new product form inputs
+  const handleInputChange = (e) => {
+    setNewProduct({
+      ...newProduct,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  // Add new product
+  const handleAddProduct = () => {
+    if (
+      newProduct.product &&
+      newProduct.category &&
+      newProduct.sale_price &&
+      newProduct.quantity
+    ) {
+      setProducts([...products, { ...newProduct, sale_price: parseFloat(newProduct.sale_price), market_price: parseFloat(newProduct.market_price), quantity: parseInt(newProduct.quantity) }]);
+      setNewProduct({
+        index: products.length + 2,
+        product: '',
+        category: '',
+        sub_category: '',
+        brand: '',
+        sale_price: '',
+        market_price: '',
+        type: '',
+        rating: '',
+        description: '',
+        quantity: '',
+      });
+    } else {
+      alert("Please fill in all required fields.");
+    }
+  };
+
+  // Delete product
+  const handleDeleteProduct = (index) => {
+    const updatedProducts = products.filter((_, i) => i !== index);
+    setProducts(updatedProducts);
+  };
+
+  // CSV headers and data
+  const headers = [
+    { label: 'Index', key: 'index' },
+    { label: 'Product', key: 'product' },
+    { label: 'Category', key: 'category' },
+    { label: 'Sub-Category', key: 'sub_category' },
+    { label: 'Brand', key: 'brand' },
+    { label: 'Sale Price', key: 'sale_price' },
+    { label: 'Market Price', key: 'market_price' },
+    { label: 'Type', key: 'type' },
+    { label: 'Rating', key: 'rating' },
+    { label: 'Description', key: 'description' },
+    { label: 'Quantity', key: 'quantity' },
+  ];
 
   return (
     <div className="container mx-auto mt-10 p-4">
-      <div className="flex justify-between mb-4">
-        <h3 className="text-xl font-semibold">Product List</h3>
-        <input
-          type="text"
-          placeholder="Search by name, SKU, or category..."
-          value={searchTerm}
-          onChange={handleSearch}
-          className="border p-2 mr-2"
-        />
+      <h3 className="text-xl font-semibold mb-4">Product List</h3>
+
+      {/* CSV Download Button */}
+      <CSVLink
+        data={products}
+        headers={headers}
+        filename="product_list.csv"
+        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 mb-4 inline-block"
+      >
+        Download CSV
+      </CSVLink>
+
+      {/* Form to add a new product */}
+      <div className="mb-6">
+        {['product', 'category', 'sub_category', 'brand', 'sale_price', 'market_price', 'type', 'rating', 'description', 'quantity'].map((field, index) => (
+          <input
+            key={index}
+            type="text"
+            name={field}
+            placeholder={field.replace('_', ' ').toUpperCase()}
+            value={newProduct[field]}
+            onChange={handleInputChange}
+            className="border p-2 mr-2 mb-2"
+          />
+        ))}
         <button
-          className="bg-orange-500 text-white px-4 py-2 rounded hover:bg-orange-600"
-          onClick={() => setShowForm(!showForm)} // Toggle form visibility
+          onClick={handleAddProduct}
+          className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
         >
-          {showForm ? 'Cancel' : '+ Add New Product'}
+          Add Product
         </button>
       </div>
-
-      {showForm && (
-        <div className="mb-6">
-          {/* Form inputs */}
-          <input
-            type="text"
-            name="name"
-            placeholder="Product Name"
-            value={newProduct.name}
-            onChange={handleInputChange}
-            className="border p-2 mr-2"
-          />
-          <input
-            type="text"
-            name="sku"
-            placeholder="SKU"
-            value={newProduct.sku}
-            onChange={handleInputChange}
-            className="border p-2 mr-2"
-          />
-          <input
-            type="text"
-            name="category"
-            placeholder="Category"
-            value={newProduct.category}
-            onChange={handleInputChange}
-            className="border p-2 mr-2"
-          />
-          <input
-            type="number"
-            name="price"
-            placeholder="Price"
-            value={newProduct.price}
-            onChange={handleInputChange}
-            className="border p-2 mr-2"
-          />
-          <input
-            type="text"
-            name="unit"
-            placeholder="Unit"
-            value={newProduct.unit}
-            onChange={handleInputChange}
-            className="border p-2 mr-2"
-          />
-          <input
-            type="number"
-            name="qty"
-            placeholder="Quantity"
-            value={newProduct.qty}
-            onChange={handleInputChange}
-            className="border p-2 mr-2"
-          />
-          <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" onClick={handleAddProduct}>
-            Add Product
-          </button>
-        </div>
-      )}
 
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-200 shadow-md rounded-lg">
           <thead>
             <tr className="bg-gray-100 text-left">
-              <th className="p-3 cursor-pointer" onClick={() => handleSort('name')}>
-                Product Name <FontAwesomeIcon icon={faSort} />
-              </th>
-              <th className="p-3 cursor-pointer" onClick={() => handleSort('sku')}>
-                SKU <FontAwesomeIcon icon={faSort} />
-              </th>
-              <th className="p-3 cursor-pointer" onClick={() => handleSort('category')}>
-                Category <FontAwesomeIcon icon={faSort} />
-              </th>
-              <th className="p-3 cursor-pointer" onClick={() => handleSort('price')}>
-                Price <FontAwesomeIcon icon={faSort} />
-              </th>
-              <th className="p-3">Unit</th>
-              <th className="p-3 cursor-pointer" onClick={() => handleSort('qty')}>
-                Qty <FontAwesomeIcon icon={faSort} />
-              </th>
-              <th className="p-3">Created By</th>
-              <th className="p-3">Action</th>
+              {headers.map((col, index) => (
+                <th
+                  key={index}
+                  className="p-3 cursor-pointer"
+                  onClick={() => handleSort(col.key)}
+                >
+                  {col.label} <FontAwesomeIcon icon={faSort} />
+                </th>
+              ))}
+              <th className="p-3">Actions</th>
             </tr>
           </thead>
           <tbody>
-            {filteredProducts.map((product, index) => (
+            {sortedProducts.map((product, index) => (
               <tr key={index} className="border-t">
-                <td className="p-3">{product.name}</td>
-                <td className="p-3">{product.sku}</td>
+                <td className="p-3">{product.index}</td>
+                <td className="p-3">{product.product}</td>
                 <td className="p-3">{product.category}</td>
-                <td className="p-3">{product.price.toFixed(2)}</td>
-                <td className="p-3">{product.unit}</td>
+                <td className="p-3">{product.sub_category}</td>
+                <td className="p-3">{product.brand}</td>
+                <td className="p-3">${product.sale_price.toFixed(2)}</td>
+                <td className="p-3">${product.market_price.toFixed(2)}</td>
+                <td className="p-3">{product.type}</td>
+                <td className="p-3">{product.rating}</td>
+                <td className="p-3">{product.description}</td>
+                <td className="p-3">{product.quantity}</td>
                 <td className="p-3">
-                  {editIndex === index ? (
-                    <input
-                      type="number"
-                      value={editQty}
-                      onChange={(e) => setEditQty(parseInt(e.target.value))}
-                      className="border p-1"
-                    />
-                  ) : (
-                    product.qty
-                  )}
-                </td>
-                <td className="p-3">{product.createdBy}</td>
-                <td className="p-3 flex space-x-2">
-                  {editIndex === index ? (
-                    <button
-                      onClick={() => handleSaveQty(index)}
-                      className="text-green-500 hover:text-green-700"
-                    >
-                      <FontAwesomeIcon icon={faSave} />
-                    </button>
-                  ) : (
-                    <button
-                      onClick={() => handleEditQty(index)}
-                      className="text-blue-500 hover:text-blue-700"
-                    >
-                      <FontAwesomeIcon icon={faEdit} />
-                    </button>
-                  )}
                   <button
                     onClick={() => handleDeleteProduct(index)}
                     className="text-red-500 hover:text-red-700"
