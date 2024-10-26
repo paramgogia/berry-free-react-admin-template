@@ -91,7 +91,7 @@ const WhisperTranscription = () => {
 
       while (retryCount < maxRetries && !success) {
         try {
-          const response = await fetch('https://api.openai.com/v1/audio/transcriptions', {
+          const response = await fetch( {
             method: 'POST',
             headers: {
             },
