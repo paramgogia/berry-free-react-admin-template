@@ -15,7 +15,7 @@ import TotalIncomeLightCard from './TotalIncomeLightCard';
 import TotalGrowthBarChart from './TotalGrowthBarChart';
 import Chatbot from './Chatbot';
 import { gridSpacing } from 'store/constant';
-
+import WhisperTranscription from './harshit/whisper';
 // assets
 import StorefrontTwoToneIcon from '@mui/icons-material/StorefrontTwoTone';
 
@@ -48,17 +48,13 @@ const Dashboard = () => {
               <Grid container spacing={gridSpacing}>
                 <Grid item sm={6} xs={12} md={6} lg={12}>
                   <TotalIncomeDarkCard isLoading={isLoading} />
+                  
                 </Grid>
                 <Grid item sm={6} xs={12} md={6} lg={12}>
-                  <TotalIncomeLightCard
-                    {...{
-                      isLoading: isLoading,
-                      total: 203,
-                      label: 'Total Income',
-                      icon: <StorefrontTwoToneIcon fontSize="inherit" />
-                    }}
-                  />
+                <WhisperTranscription />
+                  
                 </Grid>
+                
               </Grid>
             </Grid>
           </Grid>
